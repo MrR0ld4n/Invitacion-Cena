@@ -147,35 +147,35 @@ body.ready #nav{opacity:1}
 #back{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:none;border:0;color:var(--gold);font-size:1.35rem;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
 #back.v{opacity:.9;pointer-events:auto}
 
-/* ====== FLECHAS SUTILES Y DIFUMINADAS ====== */
+/* ====== FLECHAS DIFUMINADAS EN ZONA DE TOQUE LATERAL ====== */
 .nav-hint {
   position: fixed; top: 50%; transform: translateY(-50%);
-  width: 54px; height: 54px; border-radius: 50%;
+  width: 56px; height: 56px; border-radius: 50%;
   z-index: 10; pointer-events: none;
-  opacity: 0; transition: opacity 0.6s ease;
-  background: radial-gradient(circle, rgba(212,175,55,0.22) 0%, rgba(212,175,55,0) 72%);
+  opacity: 0; transition: opacity 0.5s ease;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
-  color: rgba(241, 217, 138, 0.55);
-  filter: blur(0.6px);
-  text-shadow: 0 0 12px rgba(212, 175, 55, 0.45);
+  font-size: clamp(2.1rem, 4.5vw, 2.7rem);
+  line-height: 1;
+  color: rgba(241, 217, 138, 0.58);
+  filter: blur(1.2px);
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
 }
 .nav-hint.show { opacity: 1; }
-#hint-left { left: 8px; }
-#hint-right { right: 8px; }
-#hint-left.show { animation: rippleLeft 2.8s ease-in-out infinite; }
-#hint-right.show { animation: rippleRight 2.8s ease-in-out infinite; }
+#hint-left { left: 10px; }
+#hint-right { right: 10px; }
+#hint-left.show { animation: rippleLeft 2.6s ease-in-out infinite; }
+#hint-right.show { animation: rippleRight 2.6s ease-in-out infinite; }
 
 @keyframes rippleLeft {
-  0% { transform: scale(0.92) translateY(-50%); opacity: 0.25; filter: blur(1px); }
-  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.4px); }
-  100% { transform: scale(0.92) translateY(-50%); opacity: 0.25; filter: blur(1px); }
+  0% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
+  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.8px); }
+  100% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
 }
 @keyframes rippleRight {
-  0% { transform: scale(0.92) translateY(-50%); opacity: 0.25; filter: blur(1px); }
-  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.4px); }
-  100% { transform: scale(0.92) translateY(-50%); opacity: 0.25; filter: blur(1px); }
+  0% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
+  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.8px); }
+  100% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
 }
 
 /* ====== ANIMACIÓN DE INTRO ====== */
@@ -195,7 +195,7 @@ body.ready #nav{opacity:1}
   #brand img{height:clamp(95px, 16dvh, 135px);}
   .screen{padding-top:clamp(132px, 22dvh, 175px);padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
   .media-container{max-height:30dvh;aspect-ratio:auto;height:min(28dvh, 210px);}
-  .nav-hint{width:42px;height:42px;font-size:1.65rem;}
+  .nav-hint{width:42px;height:42px;font-size:1.85rem;}
   #hint-left{left:4px;}
   #hint-right{right:4px;}
 }
@@ -207,7 +207,7 @@ body.ready #nav{opacity:1}
 <div id="frame"><i></i><i></i><i></i><i></i></div>
 <div id="brand"><img id="logo" alt="" hidden></div>
 
-<!-- FLECHAS SUTILES LATERALES -->
+<!-- FLECHAS DIFUMINADAS LATERALES -->
 <div class="nav-hint" id="hint-left">&#8249;</div>
 <div class="nav-hint" id="hint-right">&#8250;</div>
 
@@ -447,13 +447,9 @@ function go(n, force) {
   $('back').classList.toggle('v', n > 0);
   $('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
 
-  if(n === sc.length - 1) {
-    hintLeft.classList.remove('show');
-    hintRight.classList.remove('show');
-  } else {
-    hintLeft.classList.toggle('show', n > 0);
-    hintRight.classList.toggle('show', n < sc.length - 1);
-  }
+  // Primera: solo derecha | Última: solo izquierda | Intermedias: ambas
+  hintLeft.classList.toggle('show', n > 0);
+  hintRight.classList.toggle('show', n < sc.length - 1);
 }
 
 const next = function(){ go(cur+1); };

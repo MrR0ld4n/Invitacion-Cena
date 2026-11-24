@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Noche de Estrellas</title>
 
-  <!-- Favicon (ícono de la pestaña y en celulares) -->
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="./logo.png">
 <link rel="apple-touch-icon" href="./logo.png">
-  
-  <meta property="og:type" content="website">
+
+<!-- Vista previa para WhatsApp -->
+<meta property="og:type" content="website">
 <meta property="og:title" content="Noche de Estrellas — Estás invitado a la cena">
 <meta property="og:description" content="Gala de reconocimiento al alto rendimiento y la excelencia. Toca para ver tu invitación.">
 <meta property="og:image" content="https://invitacion-noche-de-estrellas.vercel.app/logo.png">
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#050505;--g1:#8a6a1f;--g2:#f1d98a;--g3:#d4af37;--gold:#d4af37;--ivory:#f5ecd6;--mute:#9b9078;
@@ -65,7 +67,6 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 
 /* ====== UBICACIÓN, MAPA Y VIDEO ====== */
 .screen-ubicacion { position: relative; z-index: 1; }
-
 .ubicacion-bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 .bg-layer {
   position: absolute; inset: 0;
@@ -125,10 +126,12 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
   letter-spacing: 0.22em; padding-bottom: 3px; z-index: 10;
   text-shadow: 0 2px 5px rgba(0,0,0,0.9);
   white-space: nowrap;
+  display: none;
 }
 
-/* navegación (CIRCULOS INDICADORES) */
+/* navegación */
 #nav{position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 1.2s}
+body.ready #nav{opacity:1}
 #dots{display:flex;gap:10px}
 #dots button{
   width: 11px; height: 11px; border-radius: 50%;
@@ -144,7 +147,7 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 #back{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:none;border:0;color:var(--gold);font-size:1.35rem;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
 #back.v{opacity:.9;pointer-events:auto}
 
-/* ====== TOQUES DE AGUA (INDICADORES LATERALES) ====== */
+/* indicadores laterales */
 .nav-hint {
   position: fixed; top: 50%; transform: translateY(-50%);
   width: 48px; height: 48px; border-radius: 50%;
@@ -153,10 +156,8 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
   background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
 }
 .nav-hint.show { opacity: 1; }
-
 #hint-left { left: 8px; }
 #hint-right { right: 8px; }
-
 #hint-left.show { animation: rippleLeft 2.5s infinite; }
 #hint-right.show { animation: rippleRight 2.5s infinite; }
 
@@ -165,7 +166,6 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
   50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
   100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
 }
-
 @keyframes rippleRight {
   0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
   50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
@@ -174,7 +174,7 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 
 /* ====== ANIMACIÓN DE INTRO ====== */
 #intro{position:fixed;inset:0;height:100dvh;z-index:99;background:#050505;display:flex;justify-content:center;align-items:center;transition:opacity .8s, visibility .8s}
-#intro.off{opacity:0;visibility:hidden}
+#intro.off{opacity:0;visibility:hidden;pointer-events:none}
 #intro-logo{position:absolute;width:min(72vw, 420px);max-height:36dvh;object-fit:contain;opacity:0;transform:scale(0.3);transition:transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1s ease;z-index:2;}
 #intro-logo.visible{opacity:1;transform:scale(1);}
 #intro-glow{position:absolute;width:min(72vw, 420px);height:min(72vw, 420px);max-height:38dvh;background:radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 60%);opacity:0;transform:scale(0.5);transition:opacity 1s ease, transform 1s ease;z-index:1;}
@@ -201,7 +201,6 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 <div id="frame"><i></i><i></i><i></i><i></i></div>
 <div id="brand"><img id="logo" alt="" hidden></div>
 
-<!-- TOQUES DE AGUA (INDICADORES LATERALES) -->
 <div class="nav-hint" id="hint-left"></div>
 <div class="nav-hint" id="hint-right"></div>
 
@@ -223,3 +222,267 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 
 <!-- 3 DETALLES -->
 <div class="screen">
+  <p class="sm">EL EVENTO</p>
+  <h2 class="gold">Reserva tu lugar</h2>
+  <div class="facts">
+    <div><b id="fecha"></b><span>FECHA</span></div>
+    <div><b id="hora"></b><span>HORA</span></div>
+    <div><b id="lugar"></b><span>LUGAR</span></div>
+    <div><b id="vest"></b><span>VESTIMENTA</span></div>
+  </div>
+  <div id="count"></div>
+</div>
+
+<!-- 4 MAPA Y VIDEO -->
+<div class="screen screen-ubicacion" id="pantalla-ubicacion">
+  <div class="ubicacion-bg-wrapper">
+    <div class="bg-layer" id="bg-dia"></div>
+    <div class="bg-layer" id="bg-noche"></div>
+  </div>
+
+  <button id="theme-toggle" title="Cambiar fondo">🌙</button>
+
+  <p class="sm" style="text-shadow: 0 2px 5px rgba(0,0,0,0.9);">UBICACIÓN</p>
+  <h2 class="gold" id="dir" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);"></h2>
+
+  <div class="media-container">
+    <iframe class="map" id="map" loading="lazy" title="Mapa del evento"></iframe>
+    <div class="video-wrapper" id="videoWrapper"></div>
+  </div>
+
+  <button class="btn-ocultar" id="btn-toggle">VER VIDEO DEL LUGAR</button>
+</div>
+
+<!-- 5 AGRADECIMIENTO -->
+<div class="screen" id="last">
+  <p class="sm">GRACIAS POR SER PARTE</p>
+  <h2 class="gold">Esta noche brilla por ti</h2>
+  <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
+  <p class="lead" style="max-width: 700px;">
+    Detrás de cada logro hay personas extraordinarias, y tú eres una de ellas. Sabemos que haces parte importante de este proceso, por eso te esperamos.
+  </p>
+</div>
+
+<a class="lnk" id="mapLink" target="_blank" rel="noopener">ABRIR EN GOOGLE MAPS</a>
+
+<button id="back" aria-label="Anterior">&#8592;</button>
+<div id="nav"><div id="dots"></div><div id="hint">TOCA PARA CONTINUAR</div></div>
+
+<!-- CONTENEDOR DE LA INTRO -->
+<div id="intro">
+  <div id="intro-glow"></div>
+  <img id="intro-logo" src="" alt="Logo">
+  <button id="skip">SALTAR</button>
+</div>
+
+<script>
+const CONFIG = {
+  logo: "./logo.png",
+  fotoDia: "./foto-dia.png",
+  fotoNoche: "./foto-noche.jpg",
+  videoSrc: "./video-lugar.mp4",
+
+  kicker: "TIENES EL HONOR DE SER INVITADO A",
+  motivo: "Una noche de estrellas para quienes brillan en ventas y en valores, elevando el estándar con disciplina y compromiso.",
+  fechaISO: "2026-12-19T19:00:00",
+  fecha: "Sáb. 19 de diciembre",
+  hora: "7:00 p. m.",
+  lugar: "Charcuteria Burguer Asados",
+  direccion: "6.769556, -76.131158",
+  vestimenta: "Semiformal",
+  evento: "Noche de Estrellas"
+};
+
+const $ = function(id) { return document.getElementById(id); };
+
+let isNight = false;
+const bgDia = $('bg-dia');
+const bgNoche = $('bg-noche');
+const themeBtn = $('theme-toggle');
+const hintLeft = $('hint-left');
+const hintRight = $('hint-right');
+
+bgDia.style.setProperty('--bg-img', 'url("' + CONFIG.fotoDia + '")');
+bgNoche.style.setProperty('--bg-img', 'url("' + CONFIG.fotoNoche + '")');
+bgDia.classList.add('active');
+
+themeBtn.onclick = function(e) {
+  e.stopPropagation();
+  isNight = !isNight;
+  if(isNight) {
+    bgNoche.classList.add('active');
+    bgDia.classList.remove('active');
+    themeBtn.textContent = '☀️';
+  } else {
+    bgDia.classList.add('active');
+    bgNoche.classList.remove('active');
+    themeBtn.textContent = '🌙';
+  }
+};
+
+$('kicker').textContent = CONFIG.kicker;
+$('motivo').textContent = CONFIG.motivo;
+$('fecha').textContent = CONFIG.fecha;
+$('hora').textContent = CONFIG.hora;
+$('lugar').textContent = CONFIG.lugar;
+$('vest').textContent = CONFIG.vestimenta;
+$('dir').textContent = CONFIG.lugar;
+
+$('map').src = 'https://maps.google.com/maps?q=' + CONFIG.direccion + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+$('mapLink').href = 'https://www.google.com/maps/search/?api=1&query=' + CONFIG.direccion;
+
+const lg = $('logo');
+lg.onload = function() { lg.hidden = false; };
+lg.src = CONFIG.logo;
+
+let showingVideo = false;
+$('btn-toggle').onclick = function(e) {
+  e.stopPropagation();
+  showingVideo = !showingVideo;
+  if(showingVideo) {
+    $('videoWrapper').innerHTML = '<video src="' + CONFIG.videoSrc + '" autoplay loop muted playsinline preload="auto"></video>';
+    const vid = $('videoWrapper').querySelector('video');
+    if (vid) vid.play().catch(function(){});
+    $('map').classList.add('hidden');
+    $('videoWrapper').classList.add('active');
+    $('btn-toggle').textContent = 'VOLVER A VER MAPA';
+  } else {
+    $('videoWrapper').innerHTML = '';
+    $('map').classList.remove('hidden');
+    $('videoWrapper').classList.remove('active');
+    $('btn-toggle').textContent = 'VER VIDEO DEL LUGAR';
+  }
+};
+
+/* ---- Animación de Intro con respaldo ---- */
+const introLg = $('intro-logo');
+const introGlow = $('intro-glow');
+let started = false;
+
+function finishIntro() {
+  if($('intro')) {
+    $('intro').classList.add('off');
+    setTimeout(function(){ if($('intro')) $('intro').remove(); }, 850);
+  }
+  document.body.classList.add('ready');
+  if(cur === -1) go(0, true);
+}
+
+function startSequence() {
+  if(started) return;
+  started = true;
+  setTimeout(function(){ introLg.classList.add('visible'); introGlow.classList.add('visible'); }, 100);
+  setTimeout(function(){ introLg.classList.add('fly'); introGlow.classList.add('fly'); }, 3100);
+  setTimeout(finishIntro, 4100);
+}
+
+introLg.onload = startSequence;
+introLg.onerror = startSequence;
+introLg.src = CONFIG.logo;
+if (introLg.complete) startSequence();
+setTimeout(startSequence, 600);
+
+$('skip').onclick = finishIntro;
+
+/* ---- Fondo de estrellas ---- */
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+(function(){
+  const c = $('bg'), g = c.getContext('2d');
+  let w, h, s;
+  const rs = function() {
+    w = c.width = innerWidth; h = c.height = innerHeight;
+    s = Array.from({length: Math.round(w*h/9000)}, function() {
+      return {x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2+0.2, p: Math.random()*6.28, v: Math.random()*0.02+0.005};
+    });
+  };
+  rs(); addEventListener('resize', rs);
+  (function f(t){
+    g.fillStyle = '#050505'; g.fillRect(0,0,w,h);
+    const gr = g.createRadialGradient(w/2,h*0.45,0,w/2,h*0.45,Math.max(w,h)*0.7);
+    gr.addColorStop(0,'#1c1405'); gr.addColorStop(1,'#050505');
+    g.fillStyle = gr; g.fillRect(0,0,w,h);
+    for(let i=0; i<s.length; i++){
+      const a = s[i];
+      a.y -= a.v*8; if(a.y < -2) a.y = h+2;
+      g.globalAlpha = 0.25 + 0.6*Math.abs(Math.sin(t/1400+a.p));
+      g.fillStyle = '#f1d98a';
+      g.beginPath(); g.arc(a.x, a.y, a.r, 0, 6.283); g.fill();
+    }
+    g.globalAlpha = 1;
+    if(!reduce) requestAnimationFrame(f);
+  })(0);
+})();
+
+/* ---- Pantallas ---- */
+const sc = Array.from(document.querySelectorAll('.screen'));
+let cur = -1, lock = 0;
+
+sc.forEach(function(_, i){
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', 'Pantalla ' + (i+1));
+  b.onclick = function(e){ e.stopPropagation(); go(i); };
+  $('dots').appendChild(b);
+});
+
+function go(n, force) {
+  if(n < 0 || n >= sc.length || (n === cur && !force)) return;
+  if(n !== 3 && showingVideo) { $('btn-toggle').click(); }
+  $('mapLink').style.display = (n === 3) ? 'block' : 'none';
+
+  sc.forEach(function(s, i){
+    s.classList.toggle('on', i === n);
+    s.classList.toggle('out', i < n);
+    if(i === n) s.scrollTop = 0;
+  });
+
+  Array.from($('dots').children).forEach(function(b, i){ b.classList.toggle('a', i === n); });
+  cur = n;
+  $('back').classList.toggle('v', n > 0);
+  $('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
+
+  if(n === 3 || n === sc.length - 1) {
+    hintLeft.classList.remove('show');
+    hintRight.classList.remove('show');
+  } else {
+    hintLeft.classList.toggle('show', n > 0);
+    hintRight.classList.toggle('show', n < sc.length - 1);
+  }
+}
+
+const next = function(){ go(cur+1); };
+const prev = function(){ go(cur-1); };
+
+$('back').onclick = function(e){ e.stopPropagation(); prev(); };
+
+document.addEventListener('click', function(e) {
+  if(!document.body.classList.contains('ready') || Date.now() < lock) return;
+  if(e.target.closest('a,button,input,select,label,iframe,video,form,.media-container,.lnk,#theme-toggle')) return;
+  const tercWidth = window.innerWidth / 3;
+  if(e.clientX < tercWidth) {
+    if(cur > 0) prev();
+  } else {
+    if(cur < sc.length - 1) next();
+  }
+  lock = Date.now() + 400;
+});
+
+addEventListener('keydown', function(e){
+  if(!document.body.classList.contains('ready') || /INPUT|SELECT/.test(document.activeElement.tagName)) return;
+  if(['ArrowRight','ArrowDown',' ','Enter'].indexOf(e.key) > -1) next();
+  if(['ArrowLeft','ArrowUp'].indexOf(e.key) > -1) prev();
+});
+
+function tick() {
+  let s = Math.max(0, Math.floor((new Date(CONFIG.fechaISO)-new Date())/1000));
+  const arr = [['DIAS',86400],['HORAS',3600],['MIN',60],['SEG',1]];
+  $('count').innerHTML = arr.map(function(item){
+    const l = item[0], m = item[1];
+    const n = Math.floor(s/m);
+    s -= n*m;
+    return '<div><b class="gold">' + String(n).padStart(2,'0') + '</b><span>' + l + '</span></div>';
+  }).join('');
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>

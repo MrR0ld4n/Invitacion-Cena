@@ -1,503 +1,1007 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>Noche de Estrellas</title>
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="./logo.png">
-<link rel="apple-touch-icon" href="./logo.png">
-
-<!-- Vista previa para WhatsApp -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Noche de Estrellas — Estás invitado a la cena">
-<meta property="og:description" content="Gala de reconocimiento al alto rendimiento y la excelencia. Toca para ver tu invitación.">
-<meta property="og:image" content="https://invitacion-noche-de-estrellas.vercel.app/logo.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
+
 :root{--bg:#050505;--g1:#8a6a1f;--g2:#f1d98a;--g3:#d4af37;--gold:#d4af37;--ivory:#f5ecd6;--mute:#9b9078;
+
 --grad:linear-gradient(110deg,#8a6a1f 0%,#f1d98a 30%,#d4af37 50%,#fff2c2 68%,#9c7a24 100%)}
+
 *{box-sizing:border-box;margin:0}
+
 html,body{min-height:100dvh;overflow-x:hidden;overflow-y:clip;background:var(--bg);color:var(--ivory);font-family:'Jost',system-ui,sans-serif;font-weight:300;-webkit-tap-highlight-color:transparent;user-select:none}
+
 #bg{position:fixed;inset:0;width:100%;height:100%;z-index:0}
 
+
+
 /* marco */
+
 #frame{position:fixed;inset:12px;border:1px solid #d4af3755;z-index:2;pointer-events:none;transition:opacity 0.5s;}
+
 #frame::before{content:"";position:absolute;inset:5px;border:1px solid #d4af3722}
+
 #frame i{position:absolute;width:24px;height:24px;border:2px solid var(--gold)}
+
 #frame i:nth-child(1){top:-2px;left:-2px;border-right:0;border-bottom:0}
+
 #frame i:nth-child(2){top:-2px;right:-2px;border-left:0;border-bottom:0}
+
 #frame i:nth-child(3){bottom:-2px;left:-2px;border-right:0;border-top:0}
+
 #frame i:nth-child(4){bottom:-2px;right:-2px;border-left:0;border-top:0}
 
+
+
 /* Logo en cada página */
+
 #brand{position:fixed;top:calc(36px + env(safe-area-inset-top,0px));left:0;right:0;z-index:5;display:flex;justify-content:center;pointer-events:none;opacity:0;transition:all 0.5s ease;padding:0 20px}
+
 #brand img{height:clamp(110px, 20dvh, 185px);max-width:min(420px, 85vw);object-fit:contain;filter:drop-shadow(0 0 25px rgba(212,175,55,0.5));transition:all 0.5s ease;}
+
 body.ready #brand{opacity:1}
 
+
+
 /* pantallas */
+
 .screen{position:fixed;inset:0;height:100dvh;width:100%;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:clamp(155px, 26dvh, 235px) clamp(20px, 5vw, 36px) clamp(92px, 14dvh, 110px);opacity:0;visibility:hidden;transform:scale(.96);filter:blur(8px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.7,.2,1),filter .9s,visibility .9s;overflow-y:auto;-webkit-overflow-scrolling:touch}
+
 .screen.on{opacity:1;visibility:visible;transform:none;filter:none}
+
 .screen.out{transform:scale(1.05)}
+
 .screen>*{margin-left:auto;margin-right:auto;flex-shrink:0}
+
 .screen.on>*{animation:up 1s both cubic-bezier(.2,.7,.2,1)}
+
 .screen.on>*:nth-child(2){animation-delay:.18s}.screen.on>*:nth-child(3){animation-delay:.36s}
+
 .screen.on>*:nth-child(4){animation-delay:.54s}.screen.on>*:nth-child(5){animation-delay:.72s}.screen.on>*:nth-child(6){animation-delay:.9s}
+
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
 .gold{background:var(--grad);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s ease-in-out infinite}
+
 @keyframes sheen{0%,100%{background-position:0 0}50%{background-position:100% 0}}
+
 h1,h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500}
+
 h1{font-size:clamp(2.2rem, 8.8vw, 6rem);line-height:1.02;letter-spacing:.06em;margin:14px 0}
+
 h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px}
+
 .sm{font-size:clamp(0.68rem, 2vw, 0.78rem);letter-spacing:.34em;color:var(--gold)}
+
 .lead{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(1.05rem, 3.2vw, 1.6rem);color:var(--ivory);max-width:640px;line-height:1.55}
+
 .orn{display:flex;align-items:center;gap:14px;justify-content:center;margin:12px 0;width:min(300px,70%)}
+
 .orn::before,.orn::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+
 .orn::after{transform:scaleX(-1)}
+
 .orn svg{width:16px;height:16px;fill:var(--gold);animation:tw 3s ease-in-out infinite}
+
 @keyframes tw{50%{transform:rotate(45deg) scale(1.3);opacity:.6}}
+
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px, 3vw, 30px) clamp(16px, 5vw, 44px);max-width:680px;width:100%;margin-top:8px}
+
 .facts b{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.15rem, 3.4vw, 1.8rem);color:var(--ivory);overflow-wrap:anywhere}
+
 .facts span{font-size:clamp(0.62rem, 1.8vw, 0.72rem);letter-spacing:.28em;color:var(--gold)}
+
 #count{display:flex;flex-wrap:wrap;gap:clamp(12px, 3vw, 26px);justify-content:center;margin-top:24px}
+
 #count b{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem, 5vw, 2.2rem);font-weight:500}
+
 #count span{font-size:0.62rem;letter-spacing:.28em;color:var(--mute)}
 
+
+
 /* ====== UBICACIÓN, MAPA Y VIDEO ====== */
+
 .screen-ubicacion { position: relative; z-index: 1; }
+
+
+
 .ubicacion-bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
 .bg-layer {
-  position: absolute; inset: 0;
-  background-size: cover; background-position: center;
-  opacity: 0; transition: opacity 1s ease-in-out;
-  background-image: var(--bg-img);
+
+position: absolute; inset: 0;
+
+background-size: cover; background-position: center;
+
+opacity: 0; transition: opacity 1s ease-in-out;
+
+background-image: var(--bg-img);
+
 }
+
 .bg-layer.active { opacity: 0.35; background-image: linear-gradient(rgba(5,5,5,0.3), rgba(5,5,5,0.6)), var(--bg-img); }
 
+
+
 #theme-toggle {
-  position: fixed; top: calc(24px + env(safe-area-inset-top,0px)); right: calc(22px + env(safe-area-inset-right,0px)); z-index: 10;
-  background: rgba(0,0,0,0.45); border: 1px solid var(--gold); color: var(--gold);
-  width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-  display: flex; justify-content: center; align-items: center;
-  transition: 0.3s; backdrop-filter: blur(5px); font-size: 1.15rem;
+
+position: fixed; top: calc(24px + env(safe-area-inset-top,0px)); right: calc(22px + env(safe-area-inset-right,0px)); z-index: 10;
+
+background: rgba(0,0,0,0.45); border: 1px solid var(--gold); color: var(--gold);
+
+width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+
+display: flex; justify-content: center; align-items: center;
+
+transition: 0.3s; backdrop-filter: blur(5px); font-size: 1.15rem;
+
 }
+
 #theme-toggle:hover { background: var(--gold); color: #000; }
 
+
+
 .media-container {
-  width: min(100%, 780px);
-  aspect-ratio: 16 / 9;
-  max-height: 36dvh;
-  height: auto;
-  margin: 12px 0 12px;
-  border: 1px solid var(--gold);
-  border-radius: 2px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-  position: relative; z-index: 2;
-  background: #000;
-  overflow: hidden;
+
+width: min(100%, 780px);
+
+aspect-ratio: 16 / 9;
+
+max-height: 36dvh;
+
+height: auto;
+
+margin: 12px 0 12px;
+
+border: 1px solid var(--gold);
+
+border-radius: 2px;
+
+box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+
+position: relative; z-index: 2;
+
+background: #000;
+
+overflow: hidden;
+
 }
+
+
 
 .map, .video-wrapper {
-  width: 100%; height: 100%;
-  position: absolute; top: 0; left: 0;
-  transition: opacity 0.4s ease;
+
+width: 100%; height: 100%;
+
+position: absolute; top: 0; left: 0;
+
+transition: opacity 0.4s ease;
+
 }
+
 .video-wrapper { opacity: 0; pointer-events: none; z-index: 2; }
+
 .video-wrapper video { width: 100%; height: 100%; object-fit: cover; border: none; display: block; }
+
 .video-wrapper.active { opacity: 1; pointer-events: auto; }
+
 .map.hidden { opacity: 0; pointer-events: none; }
 
+
+
 .btn-ocultar {
-  background: rgba(0,0,0,0.65); border: 1px solid var(--gold); color: var(--gold);
-  padding: 9px 18px; font: inherit; font-size: 0.72rem; letter-spacing: 0.2em;
-  border-radius: 30px; cursor: pointer; margin-bottom: 12px; transition: 0.3s;
-  z-index: 2; position: relative; backdrop-filter: blur(5px);
+
+background: rgba(0,0,0,0.65); border: 1px solid var(--gold); color: var(--gold);
+
+padding: 9px 18px; font: inherit; font-size: 0.72rem; letter-spacing: 0.2em;
+
+border-radius: 30px; cursor: pointer; margin-bottom: 12px; transition: 0.3s;
+
+z-index: 2; position: relative; backdrop-filter: blur(5px);
+
 }
+
 .btn-ocultar:hover { background: var(--gold); color: #000; }
 
+
+
 .lnk {
-  position: fixed;
-  bottom: calc(20px + env(safe-area-inset-bottom,0px));
-  left: 50%; transform: translateX(-50%);
-  color: var(--gold); text-decoration: none;
-  border-bottom: 1px solid var(--gold); font-size: 0.72rem;
-  letter-spacing: 0.22em; padding-bottom: 3px; z-index: 10;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.9);
-  white-space: nowrap;
-  display: none;
+
+position: fixed;
+
+bottom: calc(20px + env(safe-area-inset-bottom,0px));
+
+left: 50%; transform: translateX(-50%);
+
+color: var(--gold); text-decoration: none;
+
+border-bottom: 1px solid var(--gold); font-size: 0.72rem;
+
+letter-spacing: 0.22em; padding-bottom: 3px; z-index: 10;
+
+text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+
+white-space: nowrap;
+
 }
 
-/* navegación */
+
+
+/* navegación (CIRCULOS INDICADORES) */
+
 #nav{position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 1.2s}
-body.ready #nav{opacity:1}
+
 #dots{display:flex;gap:10px}
+
 #dots button{
-  width: 11px; height: 11px; border-radius: 50%;
-  border: 1px solid var(--gold); background: none;
-  padding:0; cursor:pointer; transition:.4s;
+
+width: 11px; height: 11px; border-radius: 50%;
+
+border: 1px solid var(--gold); background: none;
+
+padding:0; cursor:pointer; transition:.4s;
+
 }
+
 #dots button.a{
-  background: var(--gold); transform: scale(1.3);
-  box-shadow: 0 0 10px var(--gold);
+
+background: var(--gold); transform: scale(1.3);
+
+box-shadow: 0 0 10px var(--gold);
+
 }
+
 #hint{font-size:0.62rem;letter-spacing:.3em;color:var(--mute);animation:pulse 2.4s ease-in-out infinite}
+
 @keyframes pulse{50%{opacity:.35}}
+
 #back{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:none;border:0;color:var(--gold);font-size:1.35rem;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
+
 #back.v{opacity:.9;pointer-events:auto}
 
-/* ====== FLECHAS PARpadeantes Y DIFUMINADAS LENTAMENTE ====== */
+
+
+/* ====== TOQUES DE AGUA (INDICADORES LATERALES) ====== */
+
 .nav-hint {
-  position: fixed; top: 50%; transform: translateY(-50%);
-  width: 52px; height: 52px;
-  z-index: 10; pointer-events: none;
-  opacity: 0; transition: opacity 0.6s ease;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.2rem, 4.6vw, 2.8rem);
-  line-height: 1;
-  color: rgba(241, 217, 138, 0.58);
-  filter: blur(1.4px);
-  text-shadow: 0 0 14px rgba(212, 175, 55, 0.45);
+
+position: fixed; top: 50%; transform: translateY(-50%);
+
+width: 48px; height: 48px; border-radius: 50%;
+
+z-index: 10; pointer-events: none;
+
+opacity: 0; transition: opacity 0.6s ease;
+
+background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
+
 }
+
 .nav-hint.show { opacity: 1; }
 
+
+
 #hint-left { left: 8px; }
+
 #hint-right { right: 8px; }
 
-#hint-left.show { animation: blinkLeftSlow 4.2s ease-in-out infinite; }
-#hint-right.show { animation: blinkRightSlow 4.2s ease-in-out infinite; }
 
-@keyframes blinkLeftSlow {
-  0%, 100% { transform: scale(0.94) translateY(-50%); opacity: 0.14; filter: blur(1.8px); }
-  50% { transform: scale(1.06) translateY(-50%); opacity: 0.68; filter: blur(0.9px); }
+
+#hint-left.show { animation: rippleLeft 2.5s infinite; }
+
+#hint-right.show { animation: rippleRight 2.5s infinite; }
+
+
+
+@keyframes rippleLeft {
+
+0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+
+50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
+
+100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+
 }
 
-@keyframes blinkRightSlow {
-  0%, 100% { transform: scale(0.94) translateY(-50%); opacity: 0.14; filter: blur(1.8px); }
-  50% { transform: scale(1.06) translateY(-50%); opacity: 0.68; filter: blur(0.9px); }
+
+
+@keyframes rippleRight {
+
+0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+
+50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
+
+100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+
 }
+
+
 
 /* ====== ANIMACIÓN DE INTRO ====== */
-#intro{position:fixed;inset:0;height:100dvh;z-index:99;background:#050505;display:flex;justify-content:center;align-items:center;transition:opacity .7s, visibility .7s}
-#intro.off{opacity:0;visibility:hidden;pointer-events:none}
+
+#intro{position:fixed;inset:0;height:100dvh;z-index:99;background:#050505;display:flex;justify-content:center;align-items:center;transition:opacity .8s, visibility .8s}
+
+#intro.off{opacity:0;visibility:hidden}
+
 #intro-logo{position:absolute;width:min(72vw, 420px);max-height:36dvh;object-fit:contain;opacity:0;transform:scale(0.3);transition:transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1s ease;z-index:2;}
+
 #intro-logo.visible{opacity:1;transform:scale(1);}
+
 #intro-glow{position:absolute;width:min(72vw, 420px);height:min(72vw, 420px);max-height:38dvh;background:radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 60%);opacity:0;transform:scale(0.5);transition:opacity 1s ease, transform 1s ease;z-index:1;}
+
 #intro-glow.visible{opacity:1;transform:scale(1.5);animation:pulseGlow 2s ease-in-out infinite alternate;}
+
 @keyframes pulseGlow {0% { transform: scale(1.2); opacity: 0.6; }100% { transform: scale(1.8); opacity: 0.9; }}
+
 #intro-logo.fly{transition:transform 1s cubic-bezier(0.6, 0, 0.2, 1), opacity 1s ease;transform:scale(0.35) translate(0, -110dvh);opacity:0;}
+
 #intro-glow.fly{transition:transform 1s ease, opacity 1s ease;transform:scale(3);opacity:0;}
+
 #skip{position:absolute;bottom:calc(24px + env(safe-area-inset-bottom,0px));right:calc(24px + env(safe-area-inset-right,0px));background:none;border:1px solid #d4af3755;color:var(--mute);padding:8px 18px;font:inherit;font-size:.72rem;letter-spacing:.25em;cursor:pointer;border-radius:30px;z-index:100}
 
+
+
 @media (max-width:560px), (max-height:700px){
-  #brand{top:calc(24px + env(safe-area-inset-top,0px));}
-  #brand img{height:clamp(95px, 16dvh, 135px);}
-  .screen{padding-top:clamp(132px, 22dvh, 175px);padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
-  .media-container{max-height:30dvh;aspect-ratio:auto;height:min(28dvh, 210px);}
-  .nav-hint { width: 40px; height: 40px; font-size: 1.9rem; }
-  #hint-left { left: 4px; }
-  #hint-right { right: 4px; }
+
+#brand{top:calc(24px + env(safe-area-inset-top,0px));}
+
+#brand img{height:clamp(95px, 16dvh, 135px);}
+
+.screen{padding-top:clamp(132px, 22dvh, 175px);padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
+
+.media-container{max-height:30dvh;aspect-ratio:auto;height:min(28dvh, 210px);}
+
+.nav-hint{width:38px;height:38px;}
+
+#hint-left{left:4px;}
+
+#hint-right{right:4px;}
+
 }
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+
 </style>
+
 </head>
+
 <body>
+
 <canvas id="bg"></canvas>
+
 <div id="frame"><i></i><i></i><i></i><i></i></div>
+
 <div id="brand"><img id="logo" alt="" hidden></div>
 
-<!-- FLECHAS PARpadeantes LATERALES -->
-<div class="nav-hint" id="hint-left">&#8249;</div>
-<div class="nav-hint" id="hint-right">&#8250;</div>
+
+
+<!-- TOQUES DE AGUA (INDICADORES LATERALES) -->
+
+<div class="nav-hint" id="hint-left"></div>
+
+<div class="nav-hint" id="hint-right"></div>
+
+
 
 <!-- 1 PORTADA -->
+
 <div class="screen">
-  <p class="sm" id="kicker"></p>
-  <h1 class="gold">NOCHE<br>DE ESTRELLAS</h1>
-  <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
-  <p class="lead">Gala de reconocimiento al alto rendimiento y la excelencia</p>
+
+<p class="sm" id="kicker"></p>
+
+<h1 class="gold">NOCHE<br>DE ESTRELLAS</h1>
+
+<div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
+
+<p class="lead">Gala de reconocimiento al alto rendimiento y la excelencia</p>
+
 </div>
+
+
 
 <!-- 2 RECONOCIMIENTO -->
+
 <div class="screen">
-  <p class="sm">EL MOTIVO</p>
-  <h2 class="gold">Una noche para quienes brillan</h2>
-  <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
-  <p class="lead" id="motivo"></p>
+
+<p class="sm">EL MOTIVO</p>
+
+<h2 class="gold">Una noche para quienes brillan</h2>
+
+<div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
+
+<p class="lead" id="motivo"></p>
+
 </div>
+
+
 
 <!-- 3 DETALLES -->
+
 <div class="screen">
-  <p class="sm">EL EVENTO</p>
-  <h2 class="gold">Reserva tu lugar</h2>
-  <div class="facts">
-    <div><b id="fecha"></b><span>FECHA</span></div>
-    <div><b id="hora"></b><span>HORA</span></div>
-    <div><b id="lugar"></b><span>LUGAR</span></div>
-    <div><b id="vest"></b><span>VESTIMENTA</span></div>
-  </div>
-  <div id="count"></div>
+
+<p class="sm">EL EVENTO</p>
+
+<h2 class="gold">Reserva tu lugar</h2>
+
+<div class="facts">
+
+<div><b id="fecha"></b><span>FECHA</span></div>
+
+<div><b id="hora"></b><span>HORA</span></div>
+
+<div><b id="lugar"></b><span>LUGAR</span></div>
+
+<div><b id="vest"></b><span>VESTIMENTA</span></div>
+
 </div>
+
+<div id="count"></div>
+
+</div>
+
+
 
 <!-- 4 MAPA Y VIDEO -->
+
 <div class="screen screen-ubicacion" id="pantalla-ubicacion">
-  <div class="ubicacion-bg-wrapper">
-    <div class="bg-layer" id="bg-dia"></div>
-    <div class="bg-layer" id="bg-noche"></div>
-  </div>
 
-  <button id="theme-toggle" title="Cambiar fondo">🌙</button>
 
-  <p class="sm" style="text-shadow: 0 2px 5px rgba(0,0,0,0.9);">UBICACIÓN</p>
-  <h2 class="gold" id="dir" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);"></h2>
 
-  <div class="media-container">
-    <iframe class="map" id="map" loading="lazy" title="Mapa del evento"></iframe>
-    <div class="video-wrapper" id="videoWrapper"></div>
-  </div>
+<div class="ubicacion-bg-wrapper">
 
-  <button class="btn-ocultar" id="btn-toggle">VER VIDEO DEL LUGAR</button>
+<div class="bg-layer" id="bg-dia"></div>
+
+<div class="bg-layer" id="bg-noche"></div>
+
 </div>
+
+
+
+<button id="theme-toggle" title="Cambiar fondo">🌙</button>
+
+
+
+<p class="sm" style="text-shadow: 0 2px 5px rgba(0,0,0,0.9);">UBICACIÓN</p>
+
+<h2 class="gold" id="dir" style="text-shadow: 0 4px 15px rgba(0,0,0,0.9);"></h2>
+
+
+
+<div class="media-container">
+
+<iframe class="map" id="map" loading="lazy" title="Mapa del evento"></iframe>
+
+<div class="video-wrapper" id="videoWrapper"></div>
+
+</div>
+
+
+
+<button class="btn-ocultar" id="btn-toggle">VER VIDEO DEL LUGAR</button>
+
+</div>
+
+
 
 <!-- 5 AGRADECIMIENTO -->
+
 <div class="screen" id="last">
-  <p class="sm">GRACIAS POR SER PARTE</p>
-  <h2 class="gold">Esta noche brilla por ti</h2>
-  <div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
-  <p class="lead" style="max-width: 700px;">
-    Detrás de cada logro hay personas extraordinarias, y tú eres una de ellas. Sabemos que haces parte importante de este proceso, por eso te esperamos.
-  </p>
+
+<p class="sm">GRACIAS POR SER PARTE</p>
+
+<h2 class="gold">Esta noche brilla por ti</h2>
+
+<div class="orn"><svg viewBox="0 0 24 24"><path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z"/></svg></div>
+
+<p class="lead" style="max-width: 700px;">
+
+Detrás de cada logro hay personas extraordinarias, y tú eres una de ellas. Sabemos que haces parte importante de este proceso, por eso te esperamos.
+
+</p>
+
 </div>
+
+
+
+<!-- Enlace flotante -->
 
 <a class="lnk" id="mapLink" target="_blank" rel="noopener">ABRIR EN GOOGLE MAPS</a>
 
+
+
 <button id="back" aria-label="Anterior">&#8592;</button>
+
 <div id="nav"><div id="dots"></div><div id="hint">TOCA PARA CONTINUAR</div></div>
 
+
+
 <!-- CONTENEDOR DE LA INTRO -->
+
 <div id="intro">
-  <div id="intro-glow"></div>
-  <img id="intro-logo" src="" alt="Logo">
-  <button id="skip">SALTAR</button>
+
+<div id="intro-glow"></div>
+
+<img id="intro-logo" src="" alt="Logo">
+
+<button id="skip">SALTAR</button>
+
 </div>
 
-<script>
-const CONFIG = {
-  logo: "./logo.png",
-  fotoDia: "./foto-dia.png",
-  fotoNoche: "./foto-noche.jpg",
-  videoSrc: "./video-lugar.mp4",
 
-  kicker: "TIENES EL HONOR DE SER INVITADO A",
-  motivo: "Una noche de estrellas para quienes brillan en ventas y en valores, elevando el estándar con disciplina y compromiso.",
-  fechaISO: "2026-12-19T19:00:00",
-  fecha: "Sáb. 19 de diciembre",
-  hora: "7:00 p. m.",
-  lugar: "Charcuteria Burguer Asados",
-  direccion: "6.769556, -76.131158",
-  vestimenta: "Semiformal",
-  evento: "Noche de Estrellas"
+
+<script>
+
+/* ============ EDITA AQUÍ (ARCHIVOS EN TU REPO) ============ */
+
+const CONFIG = {
+
+logo: "./logo.png",
+
+fotoDia: "./foto-dia.png",
+
+fotoNoche: "./foto-noche.jpg",
+
+videoSrc: "./video-lugar.mp4",
+
+
+
+kicker: "TIENES EL HONOR DE SER INVITADO A",
+
+motivo: "Una noche de estrellas para quienes brillan en ventas y en valores, elevando el estándar con disciplina y compromiso.",
+
+fechaISO: "2026-12-19T19:00:00",
+
+fecha: "Sáb. 19 de diciembre",
+
+hora: "7:00 p. m.",
+
+lugar: "Charcuteria Burguer Asados",
+
+direccion: "6.769556, -76.131158",
+
+vestimenta: "Semiformal",
+
+evento: "Noche de Estrellas"
+
 };
+
+/* =========================================================== */
+
+
 
 const $ = function(id) { return document.getElementById(id); };
 
+
+
+// Variables para el tema
+
 let isNight = false;
+
 const bgDia = $('bg-dia');
+
 const bgNoche = $('bg-noche');
+
 const themeBtn = $('theme-toggle');
+
 const hintLeft = $('hint-left');
+
 const hintRight = $('hint-right');
 
+
+
 bgDia.style.setProperty('--bg-img', 'url("' + CONFIG.fotoDia + '")');
+
 bgNoche.style.setProperty('--bg-img', 'url("' + CONFIG.fotoNoche + '")');
+
 bgDia.classList.add('active');
 
+
+
 themeBtn.onclick = function(e) {
-  e.stopPropagation();
-  isNight = !isNight;
-  if(isNight) {
-    bgNoche.classList.add('active');
-    bgDia.classList.remove('active');
-    themeBtn.textContent = '☀️';
-  } else {
-    bgDia.classList.add('active');
-    bgNoche.classList.remove('active');
-    themeBtn.textContent = '🌙';
-  }
+
+e.stopPropagation();
+
+isNight = !isNight;
+
+
+
+if(isNight) {
+
+bgNoche.classList.add('active');
+
+bgDia.classList.remove('active');
+
+themeBtn.textContent = '☀️';
+
+} else {
+
+bgDia.classList.add('active');
+
+bgNoche.classList.remove('active');
+
+themeBtn.textContent = '🌙';
+
+}
+
 };
+
+
 
 $('kicker').textContent = CONFIG.kicker;
+
 $('motivo').textContent = CONFIG.motivo;
+
 $('fecha').textContent = CONFIG.fecha;
+
 $('hora').textContent = CONFIG.hora;
+
 $('lugar').textContent = CONFIG.lugar;
+
 $('vest').textContent = CONFIG.vestimenta;
+
 $('dir').textContent = CONFIG.lugar;
 
+
+
 $('map').src = 'https://maps.google.com/maps?q=' + CONFIG.direccion + '&t=&z=16&ie=UTF8&iwloc=&output=embed';
+
 $('mapLink').href = 'https://www.google.com/maps/search/?api=1&query=' + CONFIG.direccion;
 
+
+
 const lg = $('logo');
+
 lg.onload = function() { lg.hidden = false; };
+
 lg.src = CONFIG.logo;
 
+
+
+/* ---- Lógica Mapa/Video Local ---- */
+
 let showingVideo = false;
+
+
+
 $('btn-toggle').onclick = function(e) {
-  e.stopPropagation();
-  showingVideo = !showingVideo;
-  if(showingVideo) {
-    $('videoWrapper').innerHTML = '<video src="' + CONFIG.videoSrc + '" autoplay loop muted playsinline preload="auto"></video>';
-    const vid = $('videoWrapper').querySelector('video');
-    if (vid) vid.play().catch(function(){});
-    $('map').classList.add('hidden');
-    $('videoWrapper').classList.add('active');
-    $('btn-toggle').textContent = 'VOLVER A VER MAPA';
-  } else {
-    $('videoWrapper').innerHTML = '';
-    $('map').classList.remove('hidden');
-    $('videoWrapper').classList.remove('active');
-    $('btn-toggle').textContent = 'VER VIDEO DEL LUGAR';
-  }
+
+e.stopPropagation();
+
+showingVideo = !showingVideo;
+
+
+
+if(showingVideo) {
+
+$('videoWrapper').innerHTML = '<video src="' + CONFIG.videoSrc + '" autoplay loop muted playsinline preload="auto"></video>';
+
+const vid = $('videoWrapper').querySelector('video');
+
+if (vid) vid.play().catch(function(){});
+
+$('map').classList.add('hidden');
+
+$('videoWrapper').classList.add('active');
+
+$('btn-toggle').textContent = 'VOLVER A VER MAPA';
+
+} else {
+
+$('videoWrapper').innerHTML = '';
+
+$('map').classList.remove('hidden');
+
+$('videoWrapper').classList.remove('active');
+
+$('btn-toggle').textContent = 'VER VIDEO DEL LUGAR';
+
+}
+
 };
 
-/* ---- Animación de Intro con arranque garantizado ---- */
+
+
+/* ---- Animación de Intro ---- */
+
 const introLg = $('intro-logo');
+
 const introGlow = $('intro-glow');
-let introFinished = false;
 
-function cerrarIntro() {
-  if (introFinished) return;
-  introFinished = true;
-  const introEl = $('intro');
-  if (introEl) {
-    introEl.classList.add('off');
-    introEl.style.display = 'none';
-  }
-  document.body.classList.add('ready');
-  go(0, true);
+let started = false;
+
+
+
+function startSequence() {
+
+if(started) return;
+
+started = true;
+
+
+
+setTimeout(function(){ introLg.classList.add('visible'); introGlow.classList.add('visible'); }, 100);
+
+setTimeout(function(){ introLg.classList.add('fly'); introGlow.classList.add('fly'); }, 3100);
+
+setTimeout(function(){
+
+$('intro').classList.add('off');
+
+document.body.classList.add('ready');
+
+go(0, true);
+
+setTimeout(function(){ if($('intro')) $('intro').remove(); }, 800);
+
+}, 4100);
+
 }
 
-if (introLg) {
-  introLg.src = CONFIG.logo;
-  introLg.onload = function() { introLg.hidden = false; };
-}
 
-setTimeout(function() {
-  if (introLg) introLg.classList.add('visible');
-  if (introGlow) introGlow.classList.add('visible');
-}, 100);
 
-setTimeout(function() {
-  if (introLg) introLg.classList.add('fly');
-  if (introGlow) introGlow.classList.add('fly');
-}, 2800);
+introLg.onload = startSequence;
 
-setTimeout(cerrarIntro, 3800);
+introLg.onerror = startSequence;
 
-if ($('skip')) {
-  $('skip').onclick = function(e) {
-    e.stopPropagation();
-    cerrarIntro();
-  };
-}
+introLg.src = CONFIG.logo;
+
+
+
+$('skip').onclick = function() {
+
+$('intro').classList.add('off');
+
+document.body.classList.add('ready');
+
+go(0, true);
+
+setTimeout(function(){ if($('intro')) $('intro').remove(); }, 800);
+
+};
+
+
 
 /* ---- Fondo de estrellas ---- */
+
 const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+
 (function(){
-  const c = $('bg'), g = c.getContext('2d');
-  let w, h, s;
-  const rs = function() {
-    w = c.width = innerWidth; h = c.height = innerHeight;
-    s = Array.from({length: Math.round(w*h/9000)}, function() {
-      return {x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2+0.2, p: Math.random()*6.28, v: Math.random()*0.02+0.005};
-    });
-  };
-  rs(); addEventListener('resize', rs);
-  (function f(t){
-    g.fillStyle = '#050505'; g.fillRect(0,0,w,h);
-    const gr = g.createRadialGradient(w/2,h*0.45,0,w/2,h*0.45,Math.max(w,h)*0.7);
-    gr.addColorStop(0,'#1c1405'); gr.addColorStop(1,'#050505');
-    g.fillStyle = gr; g.fillRect(0,0,w,h);
-    for(let i=0; i<s.length; i++){
-      const a = s[i];
-      a.y -= a.v*8; if(a.y < -2) a.y = h+2;
-      g.globalAlpha = 0.25 + 0.6*Math.abs(Math.sin(t/1400+a.p));
-      g.fillStyle = '#f1d98a';
-      g.beginPath(); g.arc(a.x, a.y, a.r, 0, 6.283); g.fill();
-    }
-    g.globalAlpha = 1;
-    if(!reduce) requestAnimationFrame(f);
-  })(0);
-})();
 
-/* ---- Pantallas ---- */
-const sc = Array.from(document.querySelectorAll('.screen'));
-let cur = -1, lock = 0;
+const c = $('bg'), g = c.getContext('2d');
 
-sc.forEach(function(_, i){
-  const b = document.createElement('button');
-  b.setAttribute('aria-label', 'Pantalla ' + (i+1));
-  b.onclick = function(e){ e.stopPropagation(); go(i); };
-  $('dots').appendChild(b);
+let w, h, s;
+
+const rs = function() {
+
+w = c.width = innerWidth; h = c.height = innerHeight;
+
+s = Array.from({length: Math.round(w*h/9000)}, function() {
+
+return {x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.2+0.2, p: Math.random()*6.28, v: Math.random()*0.02+0.005};
+
 });
 
-function go(n, force) {
-  if(n < 0 || n >= sc.length || (n === cur && !force)) return;
-  if(n !== 3 && showingVideo) { $('btn-toggle').click(); }
-  $('mapLink').style.display = (n === 3) ? 'block' : 'none';
+};
 
-  sc.forEach(function(s, i){
-    s.classList.toggle('on', i === n);
-    s.classList.toggle('out', i < n);
-    if(i === n) s.scrollTop = 0;
-  });
+rs(); addEventListener('resize', rs);
 
-  Array.from($('dots').children).forEach(function(b, i){ b.classList.toggle('a', i === n); });
-  cur = n;
-  $('back').classList.toggle('v', n > 0);
-  $('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
+(function f(t){
 
-  // Primera: solo derecha | Última: solo izquierda | Intermedias: ambas
-  hintLeft.classList.toggle('show', n > 0);
-  hintRight.classList.toggle('show', n < sc.length - 1);
+g.fillStyle = '#050505'; g.fillRect(0,0,w,h);
+
+const gr = g.createRadialGradient(w/2,h*0.45,0,w/2,h*0.45,Math.max(w,h)*0.7);
+
+gr.addColorStop(0,'#1c1405'); gr.addColorStop(1,'#050505');
+
+g.fillStyle = gr; g.fillRect(0,0,w,h);
+
+for(let i=0; i<s.length; i++){
+
+const a = s[i];
+
+a.y -= a.v*8; if(a.y < -2) a.y = h+2;
+
+g.globalAlpha = 0.25 + 0.6*Math.abs(Math.sin(t/1400+a.p));
+
+g.fillStyle = '#f1d98a';
+
+g.beginPath(); g.arc(a.x, a.y, a.r, 0, 6.283); g.fill();
+
 }
 
+g.globalAlpha = 1;
+
+if(!reduce) requestAnimationFrame(f);
+
+})(0);
+
+})();
+
+
+
+/* ---- Pantallas, Círculos y Pulsaciones ---- */
+
+const sc = Array.from(document.querySelectorAll('.screen'));
+
+let cur = -1, lock = 0;
+
+
+
+sc.forEach(function(_, i){
+
+const b = document.createElement('button');
+
+b.setAttribute('aria-label', 'Pantalla ' + (i+1));
+
+b.onclick = function(e){ e.stopPropagation(); go(i); };
+
+$('dots').appendChild(b);
+
+});
+
+
+
+function go(n, force) {
+
+if(n < 0 || n >= sc.length || (n === cur && !force)) return;
+
+
+
+if(n !== 3 && showingVideo) { $('btn-toggle').click(); }
+
+
+
+if(n === 3) {
+
+$('mapLink').style.display = 'block';
+
+} else {
+
+$('mapLink').style.display = 'none';
+
+}
+
+
+
+sc.forEach(function(s, i){
+
+s.classList.toggle('on', i === n);
+
+s.classList.toggle('out', i < n);
+
+if(i === n) s.scrollTop = 0;
+
+});
+
+
+
+Array.from($('dots').children).forEach(function(b, i){ b.classList.toggle('a', i === n); });
+
+cur = n;
+
+$('back').classList.toggle('v', n > 0);
+
+$('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
+
+
+
+if(n === 3 || n === sc.length - 1) {
+
+hintLeft.classList.remove('show');
+
+hintRight.classList.remove('show');
+
+} else {
+
+if(n > 0) hintLeft.classList.add('show');
+
+else hintLeft.classList.remove('show');
+
+
+
+if(n < sc.length - 1) hintRight.classList.add('show');
+
+else hintRight.classList.remove('show');
+
+}
+
+}
+
+
+
 const next = function(){ go(cur+1); };
+
 const prev = function(){ go(cur-1); };
+
+
 
 $('back').onclick = function(e){ e.stopPropagation(); prev(); };
 
+
+
+/* ---- TOCAR IZQUIERDA (Retroceder) / CENTRO Y DERECHA (Avanzar) ---- */
+
 document.addEventListener('click', function(e) {
-  if(!document.body.classList.contains('ready') || Date.now() < lock) return;
-  if(e.target.closest('a,button,input,select,label,iframe,video,form,.media-container,.lnk,#theme-toggle')) return;
-  const tercWidth = window.innerWidth / 3;
-  if(e.clientX < tercWidth) {
-    if(cur > 0) prev();
-  } else {
-    if(cur < sc.length - 1) next();
-  }
-  lock = Date.now() + 400;
+
+if(!document.body.classList.contains('ready') || Date.now() < lock) return;
+
+
+
+if(e.target.closest('a,button,input,select,label,iframe,video,form,.media-container,.lnk,#theme-toggle')) return;
+
+
+
+const tercWidth = window.innerWidth / 3;
+
+
+
+if(e.clientX < tercWidth) {
+
+if(cur > 0) prev();
+
+} else {
+
+if(cur < sc.length - 1) next();
+
+}
+
+
+
+lock = Date.now() + 400;
+
 });
+
+
 
 addEventListener('keydown', function(e){
-  if(!document.body.classList.contains('ready') || /INPUT|SELECT/.test(document.activeElement.tagName)) return;
-  if(['ArrowRight','ArrowDown',' ','Enter'].indexOf(e.key) > -1) next();
-  if(['ArrowLeft','ArrowUp'].indexOf(e.key) > -1) prev();
+
+if(!document.body.classList.contains('ready') || /INPUT|SELECT/.test(document.activeElement.tagName)) return;
+
+if(['ArrowRight','ArrowDown',' ','Enter'].indexOf(e.key) > -1) next();
+
+if(['ArrowLeft','ArrowUp'].indexOf(e.key) > -1) prev();
+
 });
 
+
+
+/* ---- Cuenta regresiva ---- */
+
 function tick() {
-  let s = Math.max(0, Math.floor((new Date(CONFIG.fechaISO)-new Date())/1000));
-  const arr = [['DIAS',86400],['HORAS',3600],['MIN',60],['SEG',1]];
-  $('count').innerHTML = arr.map(function(item){
-    const l = item[0], m = item[1];
-    const n = Math.floor(s/m);
-    s -= n*m;
-    return '<div><b class="gold">' + String(n).padStart(2,'0') + '</b><span>' + l + '</span></div>';
-  }).join('');
+
+let s = Math.max(0, Math.floor((new Date(CONFIG.fechaISO)-new Date())/1000));
+
+const arr = [['DIAS',86400],['HORAS',3600],['MIN',60],['SEG',1]];
+
+$('count').innerHTML = arr.map(function(item){
+
+const l = item[0], m = item[1];
+
+const n = Math.floor(s/m);
+
+s -= n*m;
+
+return '<div><b class="gold">' + String(n).padStart(2,'0') + '</b><span>' + l + '</span></div>';
+
+}).join('');
+
 }
+
 tick(); setInterval(tick, 1000);
+
 </script>
+
 </body>
+
 </html>

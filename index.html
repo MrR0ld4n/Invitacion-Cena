@@ -4,17 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Noche de Estrellas</title>
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="./logo.png">
-<link rel="apple-touch-icon" href="./logo.png">
-
-<!-- Vista previa para WhatsApp -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Noche de Estrellas — Estás invitado a la cena">
-<meta property="og:description" content="Gala de reconocimiento al alto rendimiento y la excelencia. Toca para ver tu invitación.">
-<meta property="og:image" content="https://invitacion-noche-de-estrellas.vercel.app/logo.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,600;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#050505;--g1:#8a6a1f;--g2:#f1d98a;--g3:#d4af37;--gold:#d4af37;--ivory:#f5ecd6;--mute:#9b9078;
@@ -67,6 +56,7 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 
 /* ====== UBICACIÓN, MAPA Y VIDEO ====== */
 .screen-ubicacion { position: relative; z-index: 1; }
+
 .ubicacion-bg-wrapper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 .bg-layer {
   position: absolute; inset: 0;
@@ -126,12 +116,10 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
   letter-spacing: 0.22em; padding-bottom: 3px; z-index: 10;
   text-shadow: 0 2px 5px rgba(0,0,0,0.9);
   white-space: nowrap;
-  display: none;
 }
 
-/* navegación */
+/* navegación (CIRCULOS INDICADORES) */
 #nav{position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 1.2s}
-body.ready #nav{opacity:1}
 #dots{display:flex;gap:10px}
 #dots button{
   width: 11px; height: 11px; border-radius: 50%;
@@ -147,40 +135,37 @@ body.ready #nav{opacity:1}
 #back{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:none;border:0;color:var(--gold);font-size:1.35rem;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
 #back.v{opacity:.9;pointer-events:auto}
 
-/* ====== FLECHAS DIFUMINADAS EN ZONA DE TOQUE LATERAL ====== */
+/* ====== TOQUES DE AGUA (INDICADORES LATERALES) ====== */
 .nav-hint {
   position: fixed; top: 50%; transform: translateY(-50%);
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 48px; height: 48px; border-radius: 50%;
   z-index: 10; pointer-events: none;
-  opacity: 0; transition: opacity 0.5s ease;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.1rem, 4.5vw, 2.7rem);
-  line-height: 1;
-  color: rgba(241, 217, 138, 0.58);
-  filter: blur(1.2px);
-  text-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
+  opacity: 0; transition: opacity 0.6s ease;
+  background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
 }
 .nav-hint.show { opacity: 1; }
-#hint-left { left: 10px; }
-#hint-right { right: 10px; }
-#hint-left.show { animation: rippleLeft 2.6s ease-in-out infinite; }
-#hint-right.show { animation: rippleRight 2.6s ease-in-out infinite; }
+
+#hint-left { left: 8px; }
+#hint-right { right: 8px; }
+
+#hint-left.show { animation: rippleLeft 2.5s infinite; }
+#hint-right.show { animation: rippleRight 2.5s infinite; }
 
 @keyframes rippleLeft {
-  0% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
-  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.8px); }
-  100% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
+  0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+  50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
+  100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
 }
+
 @keyframes rippleRight {
-  0% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
-  50% { transform: scale(1.12) translateY(-50%); opacity: 0.72; filter: blur(0.8px); }
-  100% { transform: scale(0.9) translateY(-50%); opacity: 0.25; filter: blur(1.6px); }
+  0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+  50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
+  100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
 }
 
 /* ====== ANIMACIÓN DE INTRO ====== */
 #intro{position:fixed;inset:0;height:100dvh;z-index:99;background:#050505;display:flex;justify-content:center;align-items:center;transition:opacity .8s, visibility .8s}
-#intro.off{opacity:0;visibility:hidden;pointer-events:none}
+#intro.off{opacity:0;visibility:hidden}
 #intro-logo{position:absolute;width:min(72vw, 420px);max-height:36dvh;object-fit:contain;opacity:0;transform:scale(0.3);transition:transform 1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1s ease;z-index:2;}
 #intro-logo.visible{opacity:1;transform:scale(1);}
 #intro-glow{position:absolute;width:min(72vw, 420px);height:min(72vw, 420px);max-height:38dvh;background:radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 60%);opacity:0;transform:scale(0.5);transition:opacity 1s ease, transform 1s ease;z-index:1;}
@@ -195,7 +180,7 @@ body.ready #nav{opacity:1}
   #brand img{height:clamp(95px, 16dvh, 135px);}
   .screen{padding-top:clamp(132px, 22dvh, 175px);padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
   .media-container{max-height:30dvh;aspect-ratio:auto;height:min(28dvh, 210px);}
-  .nav-hint{width:42px;height:42px;font-size:1.85rem;}
+  .nav-hint{width:38px;height:38px;}
   #hint-left{left:4px;}
   #hint-right{right:4px;}
 }
@@ -207,9 +192,9 @@ body.ready #nav{opacity:1}
 <div id="frame"><i></i><i></i><i></i><i></i></div>
 <div id="brand"><img id="logo" alt="" hidden></div>
 
-<!-- FLECHAS DIFUMINADAS LATERALES -->
-<div class="nav-hint" id="hint-left">&#8249;</div>
-<div class="nav-hint" id="hint-right">&#8250;</div>
+<!-- TOQUES DE AGUA (INDICADORES LATERALES) -->
+<div class="nav-hint" id="hint-left"></div>
+<div class="nav-hint" id="hint-right"></div>
 
 <!-- 1 PORTADA -->
 <div class="screen">
@@ -242,6 +227,7 @@ body.ready #nav{opacity:1}
 
 <!-- 4 MAPA Y VIDEO -->
 <div class="screen screen-ubicacion" id="pantalla-ubicacion">
+
   <div class="ubicacion-bg-wrapper">
     <div class="bg-layer" id="bg-dia"></div>
     <div class="bg-layer" id="bg-noche"></div>
@@ -270,6 +256,7 @@ body.ready #nav{opacity:1}
   </p>
 </div>
 
+<!-- Enlace flotante -->
 <a class="lnk" id="mapLink" target="_blank" rel="noopener">ABRIR EN GOOGLE MAPS</a>
 
 <button id="back" aria-label="Anterior">&#8592;</button>
@@ -283,6 +270,7 @@ body.ready #nav{opacity:1}
 </div>
 
 <script>
+/* ============ EDITA AQUÍ (ARCHIVOS EN TU REPO) ============ */
 const CONFIG = {
   logo: "./logo.png",
   fotoDia: "./foto-dia.png",
@@ -299,9 +287,11 @@ const CONFIG = {
   vestimenta: "Semiformal",
   evento: "Noche de Estrellas"
 };
+/* =========================================================== */
 
 const $ = function(id) { return document.getElementById(id); };
 
+// Variables para el tema
 let isNight = false;
 const bgDia = $('bg-dia');
 const bgNoche = $('bg-noche');
@@ -316,6 +306,7 @@ bgDia.classList.add('active');
 themeBtn.onclick = function(e) {
   e.stopPropagation();
   isNight = !isNight;
+
   if(isNight) {
     bgNoche.classList.add('active');
     bgDia.classList.remove('active');
@@ -342,10 +333,13 @@ const lg = $('logo');
 lg.onload = function() { lg.hidden = false; };
 lg.src = CONFIG.logo;
 
+/* ---- Lógica Mapa/Video Local ---- */
 let showingVideo = false;
+
 $('btn-toggle').onclick = function(e) {
   e.stopPropagation();
   showingVideo = !showingVideo;
+
   if(showingVideo) {
     $('videoWrapper').innerHTML = '<video src="' + CONFIG.videoSrc + '" autoplay loop muted playsinline preload="auto"></video>';
     const vid = $('videoWrapper').querySelector('video');
@@ -361,35 +355,35 @@ $('btn-toggle').onclick = function(e) {
   }
 };
 
-/* ---- Animación de Intro con respaldo ---- */
+/* ---- Animación de Intro ---- */
 const introLg = $('intro-logo');
 const introGlow = $('intro-glow');
 let started = false;
 
-function finishIntro() {
-  if($('intro')) {
-    $('intro').classList.add('off');
-    setTimeout(function(){ if($('intro')) $('intro').remove(); }, 850);
-  }
-  document.body.classList.add('ready');
-  if(cur === -1) go(0, true);
-}
-
 function startSequence() {
   if(started) return;
   started = true;
+
   setTimeout(function(){ introLg.classList.add('visible'); introGlow.classList.add('visible'); }, 100);
   setTimeout(function(){ introLg.classList.add('fly'); introGlow.classList.add('fly'); }, 3100);
-  setTimeout(finishIntro, 4100);
+  setTimeout(function(){
+    $('intro').classList.add('off');
+    document.body.classList.add('ready');
+    go(0, true);
+    setTimeout(function(){ if($('intro')) $('intro').remove(); }, 800);
+  }, 4100);
 }
 
 introLg.onload = startSequence;
 introLg.onerror = startSequence;
 introLg.src = CONFIG.logo;
-if (introLg.complete) startSequence();
-setTimeout(startSequence, 600);
 
-$('skip').onclick = finishIntro;
+$('skip').onclick = function() {
+  $('intro').classList.add('off');
+  document.body.classList.add('ready');
+  go(0, true);
+  setTimeout(function(){ if($('intro')) $('intro').remove(); }, 800);
+};
 
 /* ---- Fondo de estrellas ---- */
 const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -420,7 +414,7 @@ const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
   })(0);
 })();
 
-/* ---- Pantallas ---- */
+/* ---- Pantallas, Círculos y Pulsaciones ---- */
 const sc = Array.from(document.querySelectorAll('.screen'));
 let cur = -1, lock = 0;
 
@@ -433,8 +427,14 @@ sc.forEach(function(_, i){
 
 function go(n, force) {
   if(n < 0 || n >= sc.length || (n === cur && !force)) return;
+
   if(n !== 3 && showingVideo) { $('btn-toggle').click(); }
-  $('mapLink').style.display = (n === 3) ? 'block' : 'none';
+
+  if(n === 3) {
+    $('mapLink').style.display = 'block';
+  } else {
+    $('mapLink').style.display = 'none';
+  }
 
   sc.forEach(function(s, i){
     s.classList.toggle('on', i === n);
@@ -447,9 +447,16 @@ function go(n, force) {
   $('back').classList.toggle('v', n > 0);
   $('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
 
-  // Primera: solo derecha | Última: solo izquierda | Intermedias: ambas
-  hintLeft.classList.toggle('show', n > 0);
-  hintRight.classList.toggle('show', n < sc.length - 1);
+  if(n === 3 || n === sc.length - 1) {
+    hintLeft.classList.remove('show');
+    hintRight.classList.remove('show');
+  } else {
+    if(n > 0) hintLeft.classList.add('show');
+    else hintLeft.classList.remove('show');
+
+    if(n < sc.length - 1) hintRight.classList.add('show');
+    else hintRight.classList.remove('show');
+  }
 }
 
 const next = function(){ go(cur+1); };
@@ -457,15 +464,20 @@ const prev = function(){ go(cur-1); };
 
 $('back').onclick = function(e){ e.stopPropagation(); prev(); };
 
+/* ---- TOCAR IZQUIERDA (Retroceder) / CENTRO Y DERECHA (Avanzar) ---- */
 document.addEventListener('click', function(e) {
   if(!document.body.classList.contains('ready') || Date.now() < lock) return;
+
   if(e.target.closest('a,button,input,select,label,iframe,video,form,.media-container,.lnk,#theme-toggle')) return;
+
   const tercWidth = window.innerWidth / 3;
+
   if(e.clientX < tercWidth) {
     if(cur > 0) prev();
   } else {
     if(cur < sc.length - 1) next();
   }
+
   lock = Date.now() + 400;
 });
 
@@ -475,6 +487,7 @@ addEventListener('keydown', function(e){
   if(['ArrowLeft','ArrowUp'].indexOf(e.key) > -1) prev();
 });
 
+/* ---- Cuenta regresiva ---- */
 function tick() {
   let s = Math.max(0, Math.floor((new Date(CONFIG.fechaISO)-new Date())/1000));
   const arr = [['DIAS',86400],['HORAS',3600],['MIN',60],['SEG',1]];

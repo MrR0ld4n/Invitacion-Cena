@@ -120,6 +120,7 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 
 /* navegación (CIRCULOS INDICADORES) */
 #nav{position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:6;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;transition:opacity 1.2s}
+body.ready #nav{opacity:1}
 #dots{display:flex;gap:10px}
 #dots button{
   width: 11px; height: 11px; border-radius: 50%;
@@ -135,32 +136,36 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 #back{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;background:none;border:0;color:var(--gold);font-size:1.35rem;cursor:pointer;opacity:0;pointer-events:none;transition:.4s}
 #back.v{opacity:.9;pointer-events:auto}
 
-/* ====== TOQUES DE AGUA (INDICADORES LATERALES) ====== */
+/* ====== FLECHAS PARpadeantes Y DIFUMINADAS LENTAMENTE ====== */
 .nav-hint {
   position: fixed; top: 50%; transform: translateY(-50%);
-  width: 48px; height: 48px; border-radius: 50%;
+  width: 52px; height: 52px;
   z-index: 10; pointer-events: none;
   opacity: 0; transition: opacity 0.6s ease;
-  background: radial-gradient(circle, rgba(212,175,55,0.35) 0%, rgba(212,175,55,0) 70%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.1rem, 4.5vw, 2.7rem);
+  line-height: 1;
+  color: rgba(241, 217, 138, 0.55);
+  filter: blur(1.4px);
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.45);
 }
 .nav-hint.show { opacity: 1; }
 
 #hint-left { left: 8px; }
 #hint-right { right: 8px; }
 
-#hint-left.show { animation: rippleLeft 2.5s infinite; }
-#hint-right.show { animation: rippleRight 2.5s infinite; }
+#hint-left.show { animation: blinkLeftSlow 4.2s ease-in-out infinite; }
+#hint-right.show { animation: blinkRightSlow 4.2s ease-in-out infinite; }
 
-@keyframes rippleLeft {
-  0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
-  50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
-  100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+@keyframes blinkLeftSlow {
+  0%, 100% { transform: scale(0.94) translateY(-50%); opacity: 0.14; filter: blur(1.8px); }
+  50% { transform: scale(1.06) translateY(-50%); opacity: 0.68; filter: blur(0.9px); }
 }
 
-@keyframes rippleRight {
-  0% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
-  50% { transform: scale(1.4) translateY(-50%); opacity: 1; }
-  100% { transform: scale(0.8) translateY(-50%); opacity: 0.3; }
+@keyframes blinkRightSlow {
+  0%, 100% { transform: scale(0.94) translateY(-50%); opacity: 0.14; filter: blur(1.8px); }
+  50% { transform: scale(1.06) translateY(-50%); opacity: 0.68; filter: blur(0.9px); }
 }
 
 /* ====== ANIMACIÓN DE INTRO ====== */
@@ -180,9 +185,11 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
   #brand img{height:clamp(95px, 16dvh, 135px);}
   .screen{padding-top:clamp(132px, 22dvh, 175px);padding-bottom:calc(88px + env(safe-area-inset-bottom,0px));}
   .media-container{max-height:30dvh;aspect-ratio:auto;height:min(28dvh, 210px);}
-  .nav-hint{width:38px;height:38px;}
-  #hint-left{left:4px;}
-  #hint-right{right:4px;}
+
+  /* Ajuste de flechas en móviles */
+  .nav-hint { width: 40px; height: 40px; font-size: 1.85rem; }
+  #hint-left { left: 4px; }
+  #hint-right { right: 4px; }
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
 </style>
@@ -192,9 +199,9 @@ h2{font-size:clamp(1.65rem, 5.2vw, 3rem);letter-spacing:.08em;margin-bottom:16px
 <div id="frame"><i></i><i></i><i></i><i></i></div>
 <div id="brand"><img id="logo" alt="" hidden></div>
 
-<!-- TOQUES DE AGUA (INDICADORES LATERALES) -->
-<div class="nav-hint" id="hint-left"></div>
-<div class="nav-hint" id="hint-right"></div>
+<!-- FLECHAS PARpadeantes LATERALES -->
+<div class="nav-hint" id="hint-left">&#8249;</div>
+<div class="nav-hint" id="hint-right">&#8250;</div>
 
 <!-- 1 PORTADA -->
 <div class="screen">
@@ -447,6 +454,7 @@ function go(n, force) {
   $('back').classList.toggle('v', n > 0);
   $('hint').style.visibility = n === sc.length-1 ? 'hidden' : 'visible';
 
+  // Lógica para las flechas laterales
   if(n === 3 || n === sc.length - 1) {
     hintLeft.classList.remove('show');
     hintRight.classList.remove('show');
